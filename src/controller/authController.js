@@ -43,8 +43,8 @@ const AuthController = {
      */
     async checkGamer(req, res) {
         try {
-            console.log(req.body);
-            const gamer = await findByKey(User, { email: req.body.email });
+            console.log(req.query);
+            const gamer = await findByKey(User, { email: req.query.email });
             if (!gamer) return successResponse(res, { message: "User can play a game" }, 200);
             else {
                 if (gamer.score === null || gamer.score === undefined) {

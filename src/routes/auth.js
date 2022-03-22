@@ -10,7 +10,7 @@ const {
     getGamesBoard
 } = AuthController;
 
-router.get('/check', checkGamer);
+router.get('/check', checkGamer); //?email=u@u.com&name=uuuuuu 
 router.post('/add', addGamer);
 router.get('/board', getGamesBoard);
 
