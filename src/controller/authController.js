@@ -114,7 +114,7 @@ const AuthController = {
     */
     async getGamesBoard(req, res) {
         try {
-            const games = await allEntities(User);
+            const games = await findByKey(User, { status: "approved" });
             return successResponse(res, { games }, 200);
         } catch (error) {
             console.log(error);
