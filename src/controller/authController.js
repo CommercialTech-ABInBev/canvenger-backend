@@ -52,10 +52,6 @@ const AuthController = {
                     return successResponse(res, { message: "User can play a game" }, 200);
                 }
 
-                if (gamer.status === "failed") {
-                    return errorResponse(res, { code: 400, message: "User has already played a game" });
-                }
-
                 return errorResponse(res, { code: 400, message: "User has already played a game" });
             }
         } catch (error) {
@@ -81,16 +77,16 @@ const AuthController = {
                 gamer = await findByKey(User, { id: req.body.id });
             }
 
-            if (gamer) {
+            if (gamer && gamer.score === null || gamer.score === undefined) {
                 await updateByKey(User, { id: gamer.dataValues.id }, {
-                    score: req.body.score || 120,
+                    score: req.body.score,
                     status: req.body.status,
                     name: req.body.name,
                     email: req.body.email
                 });
             } else {
                 await addEntity(User, {
-                    score: req.body.score || 120,
+                    score: req.body.score,
                     status: req.body.status,
                     name: req.body.name,
                     email: req.body.email
