@@ -77,13 +77,13 @@ const AuthController = {
                 gamer = await findByKey(User, { id: req.body.id });
             }
 
-            if (gamer && gamer.score === null || gamer.score === undefined) {
-                await updateByKey(User, { id: gamer.dataValues.id }, {
+            if (gamer && gamer?.dataValues.score !== null || gamer?.dataValues.score !== undefined) {
+                await updateByKey(User, { 
                     score: req.body.score,
                     status: req.body.status,
                     name: req.body.name,
                     email: req.body.email
-                });
+                }, { id: gamer.dataValues.id });
             } else {
                 await addEntity(User, {
                     score: req.body.score,
