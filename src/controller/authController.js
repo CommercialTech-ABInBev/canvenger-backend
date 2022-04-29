@@ -44,7 +44,7 @@ const AuthController = {
      */
     async checkGamer(req, res) {
         try {
-            console.log(req.query);
+            // console.log(req.query);
             const gamer = await findByKey(User, { email: req.query.email });
             if (!gamer) return successResponse(res, { message: "User can play a game" }, 200);
             else {
@@ -72,25 +72,14 @@ const AuthController = {
         try {
             let gamer;
             gamer = await findByKey(User, { email: req.body.email });
-            console.log(gamer);
             if (!gamer && req.body.id) {
                 gamer = await findByKey(User, { id: req.body.id });
             }
 
             if (gamer && gamer?.dataValues.score !== null || gamer?.dataValues.score !== undefined) {
-                await updateByKey(User, { 
-                    score: req.body.score,
-                    status: req.body.status,
-                    name: req.body.name,
-                    email: req.body.email
-                }, { id: gamer.dataValues.id });
+                await updateByKey(User, { ...req.body }, { id: gamer.dataValues.id });
             } else {
-                await addEntity(User, {
-                    score: req.body.score,
-                    status: req.body.status,
-                    name: req.body.name,
-                    email: req.body.email
-                });
+                await addEntity(User, { ...req.body });
             }
 
             gamer = await findByKey(User, { email: gamer.dataValues.email });
